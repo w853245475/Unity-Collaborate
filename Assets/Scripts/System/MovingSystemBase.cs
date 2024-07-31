@@ -1,6 +1,4 @@
-using UnityEngine;
-using System.Collections;
-using System.Diagnostics;
+
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -9,16 +7,17 @@ using System;
 
 public partial class MovingSystemBase : SystemBase
 {
-
+    
     // Update is called once per frame
     protected override void OnUpdate()
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
 
-        Entities.ForEach((ref LocalTransform transform, in Enemy enemy) =>
+        Entities.ForEach((ref LocalTransform transform, in Component_Enemy enemy) =>
         {
             if (SystemAPI.HasComponent<LocalToWorld>(enemy.target)) 
             {
+
                 LocalToWorld targetl2w = SystemAPI.GetComponent<LocalToWorld>(enemy.target);
                 float3 targetPos = targetl2w.Position;
 
