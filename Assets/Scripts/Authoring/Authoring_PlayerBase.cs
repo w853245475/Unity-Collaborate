@@ -20,10 +20,11 @@ public class Baker_PlayerBase : Baker<Authoring_PlayerBase>
     {
         Entity entity = GetEntity(TransformUsageFlags.None);
 
+        AddComponent(entity, new Tag_PlayerBase());
         AddComponent(entity, new Component_PlayerBase
         {
             health = authoring.health
-        }); ;
+        });
 
     }
 }
