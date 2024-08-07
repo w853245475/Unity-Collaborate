@@ -25,12 +25,12 @@ public class EnemyBaker : Baker<Authoring_Enemy>
     public override void Bake(Authoring_Enemy authoring)
     {
 
-        Entity entity = GetEntity(TransformUsageFlags.None);
+        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
         AddComponent(entity, new Component_Enemy
         {
             speed = authoring.speed,
-            target = GetEntity(authoring.target, TransformUsageFlags.Dynamic),
+            target = GetEntity(authoring.target, TransformUsageFlags.None),
             health = authoring.health,
         }); ;
     }
