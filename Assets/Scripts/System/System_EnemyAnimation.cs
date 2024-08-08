@@ -36,7 +36,7 @@ public partial struct System_EnemyAnimation : ISystem
                 enemyVisual.referenceObject.transform.position = transform.Position;
                 enemyVisual.referenceObject.transform.rotation = transform.Rotation;
 
-                
+                enemyVisual.referenceObject.GetComponent<Animator>().SetBool("IsEnemyWalking", true);
             }
         }
 

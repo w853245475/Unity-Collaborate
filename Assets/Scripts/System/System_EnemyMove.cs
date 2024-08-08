@@ -20,8 +20,6 @@ public partial class EnemyMoveSystem : SystemBase
         {
             if (SystemAPI.HasComponent<LocalToWorld>(player_entity)) 
             {
-
-
                 LocalToWorld targetl2w = SystemAPI.GetComponent<LocalToWorld>(player_entity);
                 float3 targetPos = targetl2w.Position;
 

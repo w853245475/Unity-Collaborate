@@ -7,7 +7,6 @@ using Unity.Entities;
 public class Authoring_Enemy : MonoBehaviour
 {
     public float speed;
-    public GameObject target;
     public float health;
 }
 
@@ -15,7 +14,6 @@ public class Authoring_Enemy : MonoBehaviour
 public struct Component_Enemy : IComponentData
 {
     public float speed;
-    public Entity target;
     public float health;
 }
 
@@ -30,7 +28,6 @@ public class EnemyBaker : Baker<Authoring_Enemy>
         AddComponent(entity, new Component_Enemy
         {
             speed = authoring.speed,
-            target = GetEntity(authoring.target, TransformUsageFlags.None),
             health = authoring.health,
         }); ;
     }

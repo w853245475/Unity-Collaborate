@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  target: {fileID: 931173098}
   health: 0
 --- !u!61 &1777036127
 BoxCollider2D:
@@ -585,7 +584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  target: {fileID: 931173098}
   health: 0
 --- !u!114 &1912302307811710946
 MonoBehaviour:
@@ -600,7 +598,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  target: {fileID: 931173098}
   health: 0
 --- !u!1 &4636941616446755116
 GameObject:
