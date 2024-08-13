@@ -5,11 +5,11 @@ using Unity.Transforms;
 using Unity.VisualScripting;
 using System;
 
-public partial class EnemyMoveSystem : SystemBase
+public partial class EnemyMoveSystem : ISystem
 {
     
     // Update is called once per frame
-    protected override void OnUpdate()
+    private void OnUpdate()
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
 
