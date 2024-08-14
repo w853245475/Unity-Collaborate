@@ -4,12 +4,14 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.VisualScripting;
 using System;
+using Unity.Burst;
+using ROGUE.TD;
 
-public partial class EnemyMoveSystem : ISystem
+public partial class EnemyMoveSystem : SystemBase
 {
     
     // Update is called once per frame
-    private void OnUpdate()
+    protected override void OnUpdate()
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
 
@@ -29,4 +31,25 @@ public partial class EnemyMoveSystem : ISystem
 
         }).ScheduleParallel();
     }
+
+
+    //[BurstCompile]
+    //public partial struct Job_EnemyWalk : IJobEntity
+    //{
+    //    public float DeltaTime;
+    //    public float BrainRadiusSq;
+    //    public EntityCommandBuffer.ParallelWriter ECB;
+
+    //    [BurstCompile]
+    //    private void Execute(Aspect_EnemyWalk zombie, [EntityIndexInQuery] int sortKey)
+    //    {
+    //        zombie.Walk(DeltaTime);
+    //        if (zombie.IsInStoppingRange(float3.zero, BrainRadiusSq))
+    //        {
+    //            ECB.SetComponentEnabled<ZombieWalkProperties>(sortKey, zombie.Entity, false);
+    //            ECB.SetComponentEnabled<ZombieEatProperties>(sortKey, zombie.Entity, true);
+    //        }
+    //    }
+    //}
+
 }

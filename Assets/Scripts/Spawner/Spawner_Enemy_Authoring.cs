@@ -33,7 +33,7 @@ namespace ROGUE.TD
 
                 target = GetEntity(authoring.target, TransformUsageFlags.None),
                 spawnPosition = authoring.transform.position,
-                nextSpawnTime = 0.0f,
+                nextSpawnTime = 3.0f,
                 spawnRate = authoring.spawnRate,
             });
         }
