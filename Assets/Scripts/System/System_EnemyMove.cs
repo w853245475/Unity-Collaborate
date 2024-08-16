@@ -25,8 +25,13 @@ public partial class EnemyMoveSystem : SystemBase
                 LocalToWorld targetl2w = SystemAPI.GetComponent<LocalToWorld>(player_entity);
                 float3 targetPos = targetl2w.Position;
 
-                float3 moveDirection = math.normalize(targetPos - transform.Position);
-                transform.Position += moveDirection * enemy.speed * deltaTime;
+                if(math.distance(targetPos, transform.Position) > 0.5)
+                {
+                    float3 moveDirection = math.normalize(targetPos - transform.Position);
+                    transform.Position += moveDirection * enemy.speed * deltaTime;
+                }
+
+
             }
 
         }).ScheduleParallel();

@@ -53,8 +53,6 @@ namespace ROGUE.TD
             }
         }
 
-
-
         [BurstCompile]
         public partial struct Job_SpawnEnemy : IJobEntity
         {
