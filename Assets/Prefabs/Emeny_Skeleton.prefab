@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.3
   health: 0
+  attackTimer: 0
+  attackRate: 50
 --- !u!114 &-5160065602734226106
 MonoBehaviour:
   m_ObjectHideFlags: 0

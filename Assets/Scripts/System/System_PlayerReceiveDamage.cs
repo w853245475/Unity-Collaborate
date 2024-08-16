@@ -10,6 +10,8 @@ using Unity.Physics.Stateful;
 using Unity.Physics.Systems;
 using Unity.Rendering;
 using Unity.Assertions;
+using ROGUE.TD;
+using Unity.Transforms;
 
 [UpdateInGroup(typeof(PhysicsSystemGroup))]
 [UpdateAfter(typeof(StatefulTriggerEventBufferSystem))]
@@ -53,50 +55,100 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
                 var triggerEvent = triggerEventBuffer[i];
                 var otherEntity = triggerEvent.GetOtherEntity(entity);
 
-                // exclude other triggers and processed events
-                if (triggerEvent.State == StatefulEventState.Stay || !nonTriggerMask.MatchesIgnoreFilter(otherEntity))
+
+                if (EntityManager.HasComponent<Component_Enemy>(otherEntity))
                 {
-                    //if (SystemAPI.GetComponent<Component_Enemy>(otherEntity))
-                    //{
+                    var deltaTime = SystemAPI.Time.DeltaTime;
+                    var enemyComponent = SystemAPI.GetComponent<Component_Enemy>(otherEntity);
 
-                    //    Debug.Log(otherEntity);
+                    // exclude other triggers and processed events
+                    if (triggerEvent.State == StatefulEventState.Stay || !nonTriggerMask.MatchesIgnoreFilter(otherEntity))
+                    {
 
-                    //    continue;
-                    //}
 
+                        Job.WithCode(() =>
+                            {
+                                if (enemyComponent.attackTimer > 0)
+                                {
+                                    Debug.Log(enemyComponent.attackTimer);
+                                    enemyComponent.attackTimer -= deltaTime;
+                                    return;
+                                }
+                                enemyComponent.attackTimer = enemyComponent.attackRate;
+                                Debug.Log("Danamge Received! ");
+
+
+                            }
+                        ).Run();
+                        
+
+                        continue;
+
+                    }
+
+                    if (triggerEvent.State == StatefulEventState.Enter)
+                    {
+                        //Debug.Log("Enter");
+                        //MaterialMeshInfo volumeMaterialInfo = materialMeshInfoFromEntity[entity];
+                        //RenderMeshArray volumeRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(entity);
+
+                        //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
+
+                        //otherMaterialMeshInfo.Material = volumeMaterialInfo.Material;
+
+                        //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
+                    }
+                    else
+                    {
+                        //// State == PhysicsEventState.Exit
+                        //if (changeMaterial.ValueRW.ReferenceEntity == Entity.Null)
+                        //{
+                        //    continue;
+                        //}
+
+                        //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
+                        //MaterialMeshInfo referenceMaterialMeshInfo = materialMeshInfoFromEntity[changeMaterial.ValueRW.ReferenceEntity];
+                        //RenderMeshArray referenceRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(changeMaterial.ValueRW.ReferenceEntity);
+
+                        //otherMaterialMeshInfo.Material = referenceMaterialMeshInfo.Material;
+
+                        //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
+                    }
                 }
 
-                if (triggerEvent.State == StatefulEventState.Enter)
-                {
-                    Debug.Log("Enter");
-                    //MaterialMeshInfo volumeMaterialInfo = materialMeshInfoFromEntity[entity];
-                    //RenderMeshArray volumeRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(entity);
-
-                    //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
-
-                    //otherMaterialMeshInfo.Material = volumeMaterialInfo.Material;
-
-                    //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
-                }
-                else
-                {
-                    //// State == PhysicsEventState.Exit
-                    //if (changeMaterial.ValueRW.ReferenceEntity == Entity.Null)
-                    //{
-                    //    continue;
-                    //}
-
-                    //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
-                    //MaterialMeshInfo referenceMaterialMeshInfo = materialMeshInfoFromEntity[changeMaterial.ValueRW.ReferenceEntity];
-                    //RenderMeshArray referenceRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(changeMaterial.ValueRW.ReferenceEntity);
-
-                    //otherMaterialMeshInfo.Material = referenceMaterialMeshInfo.Material;
-
-                    //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
-                }
             }
         }
 
         m_CommandBufferSystem.AddJobHandleForProducer(Dependency);
+    }
+
+
+    [BurstCompile]
+    public partial struct Job_PlayerReceiveDamage : IJobEntity
+    {
+        public float deltaTime;
+        public EntityCommandBuffer ECB;
+        public Component_Enemy enemyComponent;
+
+        [BurstDiscard]
+        private void DebugInfo()
+        {
+            Debug.Log("<b> <size=13> <color=#9DF155>Info : 3 SetDataSystem : Setting Data .</color> </size> </b>");
+        }
+
+        [BurstCompile]
+        private void Execute(Aspect_EnemySpawner enemySpawner)
+        {
+            enemySpawner.EnemySpawnTimer -= deltaTime;
+
+
+            if (enemySpawner.EnemySpawnTimer > 0) return;
+
+            DebugInfo();
+
+            var newZombie = ECB.Instantiate(enemySpawner.SkeletonEnemyPrefab);
+            ECB.SetComponent(newZombie, LocalTransform.FromPositionRotationScale(enemySpawner.spawnPosition, Quaternion.identity, 5));
+            enemySpawner.EnemySpawnTimer = enemySpawner.EnemySpawnRate;
+        }
     }
 }

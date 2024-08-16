@@ -42,16 +42,16 @@ namespace ROGUE.TD
 
         }
 
-        private void ProcessSpawner(ref SystemState state, RefRW<Component_EnemySpawner> spawner)
-        {
-            if (spawner.ValueRO.nextSpawnTime < SystemAPI.Time.ElapsedTime)
-            {
-                Entity instantiated = state.EntityManager.Instantiate(spawner.ValueRO.prefab);
-                state.EntityManager.SetComponentData(instantiated, LocalTransform.FromPositionRotationScale(spawner.ValueRO.spawnPosition, Quaternion.identity, 5));
-                //state.EntityManager.SetComponentData(instantiated, LocalTransform.FromScale(5));
-                spawner.ValueRW.nextSpawnTime = (float)SystemAPI.Time.ElapsedTime + spawner.ValueRO.spawnRate;
-            }
-        }
+        //private void ProcessSpawner(ref SystemState state, RefRW<Component_EnemySpawner> spawner)
+        //{
+        //    if (spawner.ValueRO.nextSpawnTime < SystemAPI.Time.ElapsedTime)
+        //    {
+        //        Entity instantiated = state.EntityManager.Instantiate(spawner.ValueRO.prefab);
+        //        state.EntityManager.SetComponentData(instantiated, LocalTransform.FromPositionRotationScale(spawner.ValueRO.spawnPosition, Quaternion.identity, 5));
+        //        //state.EntityManager.SetComponentData(instantiated, LocalTransform.FromScale(5));
+        //        spawner.ValueRW.nextSpawnTime = (float)SystemAPI.Time.ElapsedTime + spawner.ValueRO.spawnRate;
+        //    }
+        //}
 
         [BurstCompile]
         public partial struct Job_SpawnEnemy : IJobEntity
