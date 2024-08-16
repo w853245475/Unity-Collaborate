@@ -13,6 +13,7 @@ using Unity.Assertions;
 using ROGUE.TD;
 using Unity.Transforms;
 
+[BurstCompile]
 [UpdateInGroup(typeof(PhysicsSystemGroup))]
 [UpdateAfter(typeof(StatefulTriggerEventBufferSystem))]
 public partial class TriggerVolumeChangeMaterialSystem : SystemBase
@@ -70,7 +71,7 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
                             {
                                 if (enemyComponent.attackTimer > 0)
                                 {
-                                    Debug.Log(enemyComponent.attackTimer);
+                                    Debug.Log($"{enemyComponent.attackTimer}");
                                     enemyComponent.attackTimer -= deltaTime;
                                     return;
                                 }

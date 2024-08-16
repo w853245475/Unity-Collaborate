@@ -9,7 +9,12 @@ using ROGUE.TD;
 
 public partial class EnemyMoveSystem : SystemBase
 {
-    
+    protected override void OnCreate()
+    {
+        RequireForUpdate<Tag_PlayerBase>();
+        RequireForUpdate<Component_Enemy>();
+    }
+
     // Update is called once per frame
     protected override void OnUpdate()
     {
