@@ -12,6 +12,7 @@ public struct Component_Tower : IComponentData
     //public float RotationSpeed; // The speed at which the tower rotates
     public float FireRate; // The interval between shots (cooldown period)
     public float TimeSinceLastShot; // The time elapsed since the last shot (automatically managed)
+    public float3 TargetDirection;
 }
 
 public struct Component_BulletData : IComponentData
@@ -58,7 +59,8 @@ public class Authoring_Tower : MonoBehaviour
             {
                 //RotationSpeed = authoring.RotationSpeed,
                 FireRate = authoring.FireRate,
-                TimeSinceLastShot = 0f // Initial value should be 0
+                TimeSinceLastShot = 0f, // Initial value should be 0
+                TargetDirection = float3.zero // 初始化为零向量
             };
             AddComponent(entity, towerComponent);
 

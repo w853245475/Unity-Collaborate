@@ -13,7 +13,7 @@ public class Authoring_Bullet : MonoBehaviour
 {
 
     public float Speed;  // 子弹的速度
-    class Baker : Baker<Authoring_Bullet>
+    class Authoring_BulletBaker : Baker<Authoring_Bullet>
     {
         public override void Bake(Authoring_Bullet authoring)
         {
@@ -21,7 +21,7 @@ public class Authoring_Bullet : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
 
             // 将 BulletAuthoring 中的数据转移到 ECS 的 BulletComponent
-            var data = new BulletComponent
+            var data = new Component_Bullet
             {
                 Speed = authoring.Speed,  // 从 Unity Inspector 中读取的速度
                 Direction = float3.zero,  // 初始化方向为零向量，后续可在子弹逻辑中赋值
