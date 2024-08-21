@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
-public class Aspect_PlayerHealth : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+//namespace ROGUE.TD
+//{
+//    public readonly partial struct Aspect_PlayerHealth : IAspect
+//    {
+//        public readonly Entity entity;
+
+//        private readonly RefRW<Component_PlayerBase>
+//    }
+//}

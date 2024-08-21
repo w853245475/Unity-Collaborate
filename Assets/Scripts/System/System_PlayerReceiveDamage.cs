@@ -66,22 +66,39 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
                     if (triggerEvent.State == StatefulEventState.Stay || !nonTriggerMask.MatchesIgnoreFilter(otherEntity))
                     {
 
+                        //if (enemyComponent.attackTimer > 0)
+                        //{
+                        //    Debug.Log($"{enemyComponent.attackTimer}");
+                        //    enemyComponent.attackTimer -= deltaTime;
+                        //    return;
+                        //}
+                        //else
+                        //{
+                        //    enemyComponent.attackTimer = enemyComponent.attackRate;
+                        //    Debug.Log(enemyComponent.attackTimer);
+                        //}
 
-                        Job.WithCode(() =>
-                            {
-                                if (enemyComponent.attackTimer > 0)
-                                {
-                                    Debug.Log($"{enemyComponent.attackTimer}");
-                                    enemyComponent.attackTimer -= deltaTime;
-                                    return;
-                                }
-                                enemyComponent.attackTimer = enemyComponent.attackRate;
-                                Debug.Log("Danamge Received! ");
+                        //Job.WithCode(() =>
+                        //    {
+
+                        //        Debug.Log(enemyComponent.attackTimer);
+                        //        if (enemyComponent.attackTimer > 0)
+                        //        {
+                        //            Debug.Log($"{enemyComponent.attackTimer}");
+                        //            enemyComponent.attackTimer -= deltaTime;
+                        //            return;
+                        //        }
+                        //        else
+                        //        {
+                        //            enemyComponent.attackTimer = enemyComponent.attackRate;
+                        //            Debug.Log(enemyComponent.attackTimer);
+                        //        }
 
 
-                            }
-                        ).Run();
-                        
+
+                        //    }
+                        //).Run();
+
 
                         continue;
 

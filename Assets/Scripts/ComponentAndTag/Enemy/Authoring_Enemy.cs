@@ -19,10 +19,15 @@ public struct Component_Enemy : IComponentData
 {
     public float speed;
     public float health;
-    public float attackTimer;
 
+}
+
+public struct Component_EnemyAttackProperties : IComponentData, IEnableableComponent
+{
+    public float attackTimer;
     public float attackRate;
 }
+
 
 
 public class EnemyBaker : Baker<Authoring_Enemy>
@@ -36,6 +41,11 @@ public class EnemyBaker : Baker<Authoring_Enemy>
         {
             speed = authoring.speed,
             health = authoring.health,
+
+        });
+
+        AddComponent(entity, new Component_EnemyAttackProperties
+        {
             attackTimer = authoring.attackTimer,
             attackRate = authoring.attackRate
         });
