@@ -27,7 +27,7 @@ public partial struct System_TowerTargeting : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("System_TowerTargeting Update started.");
+        //Debug.Log("System_TowerTargeting Update started.");
 
         float deltaTime = SystemAPI.Time.DeltaTime;
         enemyComponentLookup.Update(ref state);
@@ -40,7 +40,7 @@ public partial struct System_TowerTargeting : ISystem
 
             if (enemyBuffer.Length == 0)
             {
-                Debug.Log("No enemies in range.");
+                //Debug.Log("No enemies in range.");
                 continue;
             }
 
@@ -56,7 +56,7 @@ public partial struct System_TowerTargeting : ISystem
         ecb.Playback(state.EntityManager);
         ecb.Dispose();
 
-        Debug.Log("System_TowerTargeting Update ended.");
+        //Debug.Log("System_TowerTargeting Update ended.");
     }
 
     /// <summary>
@@ -89,13 +89,13 @@ public partial struct System_TowerTargeting : ISystem
                 closestDistance = distance;
                 closestEnemyPosition = enemyPosition;
                 foundEnemy = true;
-                Debug.Log($"Found enemy at distance {distance}.");
+                //Debug.Log($"Found enemy at distance {distance}.");
             }
         }
 
         if (!foundEnemy)
         {
-            Debug.LogWarning("No enemy found.");
+            //Debug.LogWarning("No enemy found.");
         }
 
         return foundEnemy;
@@ -121,14 +121,14 @@ public partial struct System_TowerTargeting : ISystem
         tower.TimeSinceLastShot = 0;
         tower.TargetDirection = direction;
 
-        Debug.Log($"Shooting at direction: {direction}");
+        //Debug.Log($"Shooting at direction: {direction}");
 
 
         var bulletData = state.EntityManager.GetComponentData<Component_BulletData>(towerEntity);
         // 确保发射点存在
         if (!state.EntityManager.HasComponent<LocalToWorld>(bulletData.SpawnPoint))
         {
-            Debug.LogWarning("Tower does not have a valid SpawnPoint.");
+            //Debug.LogWarning("Tower does not have a valid SpawnPoint.");
             return;
         }
         float3 spawnPosition = state.EntityManager.GetComponentData<LocalToWorld>(bulletData.SpawnPoint).Position;
@@ -154,7 +154,7 @@ public partial struct System_TowerTargeting : ISystem
             Speed = bulletComponent.Speed
         });
 
-        Debug.Log("Bullet instantiated.");
+        //Debug.Log("Bullet instantiated.");
     }
 }
 
