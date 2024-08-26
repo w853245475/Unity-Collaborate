@@ -135,6 +135,21 @@ PrefabInstance:
       propertyPath: m_MotionType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1912302308614301623, guid: 6c86c15803b9292478018287cc2cdd99,
+        type: 3}
+      propertyPath: attackRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912302308614301623, guid: 6c86c15803b9292478018287cc2cdd99,
+        type: 3}
+      propertyPath: attackTimer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912302308614301623, guid: 6c86c15803b9292478018287cc2cdd99,
+        type: 3}
+      propertyPath: attackDamage
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4636941617793819001, guid: 6c86c15803b9292478018287cc2cdd99,
         type: 3}
       propertyPath: m_Name

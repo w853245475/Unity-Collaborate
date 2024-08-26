@@ -22,6 +22,7 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
     private EntityQuery m_NonTriggerQuery;
     private EntityQueryMask m_NonTriggerMask;
 
+    [BurstCompile]
     protected override void OnCreate()
     {
         m_CommandBufferSystem = World.GetOrCreateSystemManaged<EndFixedStepSimulationEntityCommandBufferSystem>();
@@ -40,6 +41,7 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
         RequireForUpdate<Component_PlayerBase>();
     }
 
+    [BurstCompile]
     protected override void OnUpdate()
     {
         EntityCommandBuffer commandBuffer = m_CommandBufferSystem.CreateCommandBuffer();
@@ -48,96 +50,101 @@ public partial class TriggerVolumeChangeMaterialSystem : SystemBase
         // be captured by Entities.ForEach loop below
         var nonTriggerMask = m_NonTriggerMask;
 
-
-        foreach (var (triggerEventBuffer, changeMaterial, entity) in SystemAPI.Query<DynamicBuffer<StatefulTriggerEvent>, RefRW<Component_PlayerBase>>().WithEntityAccess())
+        foreach (var player in SystemAPI.Query<Aspect_PlayerBase>())
         {
-            for (int i = 0; i < triggerEventBuffer.Length; i++)
-            {
-                var triggerEvent = triggerEventBuffer[i];
-                var otherEntity = triggerEvent.GetOtherEntity(entity);
-
-
-                if (EntityManager.HasComponent<Component_Enemy>(otherEntity))
-                {
-                    var deltaTime = SystemAPI.Time.DeltaTime;
-                    var enemyComponent = SystemAPI.GetComponent<Component_Enemy>(otherEntity);
-
-                    // exclude other triggers and processed events
-                    if (triggerEvent.State == StatefulEventState.Stay || !nonTriggerMask.MatchesIgnoreFilter(otherEntity))
-                    {
-
-                        //if (enemyComponent.attackTimer > 0)
-                        //{
-                        //    Debug.Log($"{enemyComponent.attackTimer}");
-                        //    enemyComponent.attackTimer -= deltaTime;
-                        //    return;
-                        //}
-                        //else
-                        //{
-                        //    enemyComponent.attackTimer = enemyComponent.attackRate;
-                        //    Debug.Log(enemyComponent.attackTimer);
-                        //}
-
-                        //Job.WithCode(() =>
-                        //    {
-
-                        //        Debug.Log(enemyComponent.attackTimer);
-                        //        if (enemyComponent.attackTimer > 0)
-                        //        {
-                        //            Debug.Log($"{enemyComponent.attackTimer}");
-                        //            enemyComponent.attackTimer -= deltaTime;
-                        //            return;
-                        //        }
-                        //        else
-                        //        {
-                        //            enemyComponent.attackTimer = enemyComponent.attackRate;
-                        //            Debug.Log(enemyComponent.attackTimer);
-                        //        }
-
-
-
-                        //    }
-                        //).Run();
-
-
-                        continue;
-
-                    }
-
-                    if (triggerEvent.State == StatefulEventState.Enter)
-                    {
-                        //Debug.Log("Enter");
-                        //MaterialMeshInfo volumeMaterialInfo = materialMeshInfoFromEntity[entity];
-                        //RenderMeshArray volumeRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(entity);
-
-                        //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
-
-                        //otherMaterialMeshInfo.Material = volumeMaterialInfo.Material;
-
-                        //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
-                    }
-                    else
-                    {
-                        //// State == PhysicsEventState.Exit
-                        //if (changeMaterial.ValueRW.ReferenceEntity == Entity.Null)
-                        //{
-                        //    continue;
-                        //}
-
-                        //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
-                        //MaterialMeshInfo referenceMaterialMeshInfo = materialMeshInfoFromEntity[changeMaterial.ValueRW.ReferenceEntity];
-                        //RenderMeshArray referenceRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(changeMaterial.ValueRW.ReferenceEntity);
-
-                        //otherMaterialMeshInfo.Material = referenceMaterialMeshInfo.Material;
-
-                        //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
-                    }
-                }
-
-            }
+            player.PlayerReceiveDamage();
         }
 
-        m_CommandBufferSystem.AddJobHandleForProducer(Dependency);
+
+        //foreach (var (triggerEventBuffer, changeMaterial, entity) in SystemAPI.Query<DynamicBuffer<StatefulTriggerEvent>, RefRW<Component_PlayerBase>>().WithEntityAccess())
+        //{
+        //    for (int i = 0; i < triggerEventBuffer.Length; i++)
+        //    {
+        //        var triggerEvent = triggerEventBuffer[i];
+        //        var otherEntity = triggerEvent.GetOtherEntity(entity);
+
+
+        //        if (EntityManager.HasComponent<Component_Enemy>(otherEntity))
+        //        {
+        //            var deltaTime = SystemAPI.Time.DeltaTime;
+        //            var enemyComponent = SystemAPI.GetComponent<Component_Enemy>(otherEntity);
+
+        //            // exclude other triggers and processed events
+        //            if (triggerEvent.State == StatefulEventState.Stay || !nonTriggerMask.MatchesIgnoreFilter(otherEntity))
+        //            {
+
+        //                //if (enemyComponent.attackTimer > 0)
+        //                //{
+        //                //    Debug.Log($"{enemyComponent.attackTimer}");
+        //                //    enemyComponent.attackTimer -= deltaTime;
+        //                //    return;
+        //                //}
+        //                //else
+        //                //{
+        //                //    enemyComponent.attackTimer = enemyComponent.attackRate;
+        //                //    Debug.Log(enemyComponent.attackTimer);
+        //                //}
+
+        //                //Job.WithCode(() =>
+        //                //    {
+
+        //                //        Debug.Log(enemyComponent.attackTimer);
+        //                //        if (enemyComponent.attackTimer > 0)
+        //                //        {
+        //                //            Debug.Log($"{enemyComponent.attackTimer}");
+        //                //            enemyComponent.attackTimer -= deltaTime;
+        //                //            return;
+        //                //        }
+        //                //        else
+        //                //        {
+        //                //            enemyComponent.attackTimer = enemyComponent.attackRate;
+        //                //            Debug.Log(enemyComponent.attackTimer);
+        //                //        }
+
+
+
+        //                //    }
+        //                //).Run();
+
+
+        //                continue;
+
+        //            }
+
+        //            if (triggerEvent.State == StatefulEventState.Enter)
+        //            {
+        //                //Debug.Log("Enter");
+        //                //MaterialMeshInfo volumeMaterialInfo = materialMeshInfoFromEntity[entity];
+        //                //RenderMeshArray volumeRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(entity);
+
+        //                //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
+
+        //                //otherMaterialMeshInfo.Material = volumeMaterialInfo.Material;
+
+        //                //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
+        //            }
+        //            else
+        //            {
+        //                //// State == PhysicsEventState.Exit
+        //                //if (changeMaterial.ValueRW.ReferenceEntity == Entity.Null)
+        //                //{
+        //                //    continue;
+        //                //}
+
+        //                //MaterialMeshInfo otherMaterialMeshInfo = materialMeshInfoFromEntity[otherEntity];
+        //                //MaterialMeshInfo referenceMaterialMeshInfo = materialMeshInfoFromEntity[changeMaterial.ValueRW.ReferenceEntity];
+        //                //RenderMeshArray referenceRenderMeshArray = EntityManager.GetSharedComponentManaged<RenderMeshArray>(changeMaterial.ValueRW.ReferenceEntity);
+
+        //                //otherMaterialMeshInfo.Material = referenceMaterialMeshInfo.Material;
+
+        //                //commandBuffer.SetComponent(otherEntity, otherMaterialMeshInfo);
+        //            }
+        //        }
+
+        //    }
+        //}
+
+        //m_CommandBufferSystem.AddJobHandleForProducer(Dependency);
     }
 
 

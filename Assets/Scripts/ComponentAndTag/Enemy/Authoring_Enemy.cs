@@ -10,8 +10,9 @@ public class Authoring_Enemy : MonoBehaviour
     public float health;
     // Count down timer to fire attack when attackTimer == 0;
     public float attackTimer;
-
+    public float attackRange;
     public float attackRate;
+    public float attackDamage;
 }
 
 
@@ -24,8 +25,10 @@ public struct Component_Enemy : IComponentData
 
 public struct Component_EnemyAttackProperties : IComponentData, IEnableableComponent
 {
+    public float attackRange;
     public float attackTimer;
     public float attackRate;
+    public float attackDamage;
 }
 
 
@@ -47,7 +50,9 @@ public class EnemyBaker : Baker<Authoring_Enemy>
         AddComponent(entity, new Component_EnemyAttackProperties
         {
             attackTimer = authoring.attackTimer,
-            attackRate = authoring.attackRate
+            attackRate = authoring.attackRate,
+            attackDamage = authoring.attackDamage,
+            attackRange = authoring.attackRange
         });
     }
 }

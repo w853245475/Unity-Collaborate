@@ -1,3 +1,4 @@
+using ROGUE.TD;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
@@ -25,6 +26,6 @@ public class Baker_PlayerBase : Baker<Authoring_PlayerBase>
         {
             health = authoring.health
         });
-
+        AddBuffer<PlayerDamageBufferElement>(entity); 
     }
 }

@@ -27,7 +27,7 @@ public partial struct System_TowerTargeting : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("System_TowerTargeting Update started.");
+        //Debug.Log("System_TowerTargeting Update started.");
 
         float deltaTime = SystemAPI.Time.DeltaTime;
         enemyComponentLookup.Update(ref state);
@@ -40,7 +40,7 @@ public partial struct System_TowerTargeting : ISystem
 
             if (enemyBuffer.Length == 0)
             {
-                Debug.Log("No enemies in range.");
+                //Debug.Log("No enemies in range.");
                 continue;
             }
 
@@ -56,7 +56,7 @@ public partial struct System_TowerTargeting : ISystem
         ecb.Playback(state.EntityManager);
         ecb.Dispose();
 
-        Debug.Log("System_TowerTargeting Update ended.");
+        //Debug.Log("System_TowerTargeting Update ended.");
     }
 
     /// <summary>
