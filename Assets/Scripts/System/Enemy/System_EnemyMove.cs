@@ -21,28 +21,28 @@ namespace ROGUE.TD
         // Update is called once per frame
         protected override void OnUpdate()
         {
-            var deltaTime = SystemAPI.Time.DeltaTime;
+            //var deltaTime = SystemAPI.Time.DeltaTime;
 
-            var player_entity = SystemAPI.GetSingletonEntity<Tag_PlayerBase>();
-
-
-            Entities.ForEach((ref LocalTransform transform, in Component_Enemy enemy) =>
-            {
-                if (SystemAPI.HasComponent<LocalToWorld>(player_entity))
-                {
-                    LocalToWorld targetl2w = SystemAPI.GetComponent<LocalToWorld>(player_entity);
-                    float3 targetPos = targetl2w.Position;
-
-                    if (math.distance(targetPos, transform.Position) > 0.5)
-                    {
-                        float3 moveDirection = math.normalize(targetPos - transform.Position);
-                        transform.Position += moveDirection * enemy.speed * deltaTime;
-                    }
+            //var player_entity = SystemAPI.GetSingletonEntity<Tag_PlayerBase>();
 
 
-                }
+            //Entities.ForEach((ref LocalTransform transform, in Component_Enemy enemy) =>
+            //{
+            //    if (SystemAPI.HasComponent<LocalToWorld>(player_entity))
+            //    {
+            //        LocalToWorld targetl2w = SystemAPI.GetComponent<LocalToWorld>(player_entity);
+            //        float3 targetPos = targetl2w.Position;
 
-            }).ScheduleParallel();
+            //        if (math.distance(targetPos, transform.Position) > 0.5)
+            //        {
+            //            float3 moveDirection = math.normalize(targetPos - transform.Position);
+            //            transform.Position += moveDirection * enemy.speed * deltaTime;
+            //        }
+
+
+            //    }
+
+            //}).ScheduleParallel();
         }
 
 

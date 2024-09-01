@@ -23,7 +23,7 @@ namespace ROGUE.TD
             }
             _playerDamageBuffer.Clear();
 
-            Debug.Log(_player.ValueRW.health);
+            //Debug.Log(_player.ValueRW.health);
         }
 
     }
