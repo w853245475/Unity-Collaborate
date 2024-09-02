@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1d9be7b9975e647ba55e437f4d84f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.3
+  speed: 1
   health: 0
   attackTimer: 20
   attackRange: 3
@@ -260,4 +260,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTrasform: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 0.5

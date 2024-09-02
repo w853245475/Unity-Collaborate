@@ -151,7 +151,11 @@ public partial struct System_TowerTargeting : ISystem
         ecb.SetComponent(bulletInstance, new Component_Bullet
         {
             Direction = tower.TargetDirection,
-            Speed = bulletComponent.Speed
+            Speed = bulletComponent.Speed,
+            DebuffType = bulletComponent.DebuffType,        // 设置 Debuff 类型
+            DebuffDuration = bulletComponent.DebuffDuration, // 设置 Debuff 持续时间
+            DebuffIntensity = bulletComponent.DebuffIntensity // 设置 Debuff 强度
+
         });
 
         //Debug.Log("Bullet instantiated.");

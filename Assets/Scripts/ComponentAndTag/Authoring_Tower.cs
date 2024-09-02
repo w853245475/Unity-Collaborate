@@ -13,6 +13,7 @@ public struct Component_Tower : IComponentData
     public float FireRate; // The interval between shots (cooldown period)
     public float TimeSinceLastShot; // The time elapsed since the last shot (automatically managed)
     public float3 TargetDirection;
+    public ElementType ElementType;
 }
 
 public struct Component_BulletData : IComponentData
@@ -24,17 +25,6 @@ public struct Component_EnemyDetection : IBufferElementData
 {
     public Entity EnemyEntity;
 }
-public struct Component_AttackEffect : IComponentData
-{
-    public DebuffType EffectType;
-    //public float EffectValue;  
-    public float Duration;      
-}
-public struct Component_ElementalAttribute : IComponentData
-{
-    public ElementType ElementType;
-    //public float Strength;
-}
 
 public class Authoring_Tower : MonoBehaviour
 {
@@ -44,8 +34,6 @@ public class Authoring_Tower : MonoBehaviour
     public GameObject BulletPrefab;
     public Transform SpawnPoint;
     public ElementType ElementType;
-    public DebuffType AttackEffectType;
-    public float EffectDuration;
 
     class Baker : Baker<Authoring_Tower>
     {
@@ -60,7 +48,8 @@ public class Authoring_Tower : MonoBehaviour
                 //RotationSpeed = authoring.RotationSpeed,
                 FireRate = authoring.FireRate,
                 TimeSinceLastShot = 0f, // Initial value should be 0
-                TargetDirection = float3.zero // 初始化为零向量
+                TargetDirection = float3.zero, // 初始化为零向量
+                ElementType = authoring.ElementType  // 设置塔的元素属性
             };
             AddComponent(entity, towerComponent);
 
@@ -71,21 +60,6 @@ public class Authoring_Tower : MonoBehaviour
                 SpawnPoint = GetEntity(authoring.SpawnPoint, TransformUsageFlags.Dynamic)
             };
             AddComponent(entity, bulletDataComponent);
-
-            // Add ElementalAttribute component
-            var elementalComponent = new Component_ElementalAttribute
-            {
-                ElementType = authoring.ElementType
-            };
-            AddComponent(entity, elementalComponent);
-
-            // Add AttackEffect component
-            var attackEffectComponent = new Component_AttackEffect
-            {
-                EffectType = authoring.AttackEffectType,
-                Duration = authoring.EffectDuration
-            };
-            AddComponent(entity, attackEffectComponent);
 
             // Add an empty buffer for Enemy Detection
             AddBuffer<Component_EnemyDetection>(entity);
