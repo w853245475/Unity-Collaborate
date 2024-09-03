@@ -6,10 +6,8 @@ using UnityEngine;
 
 public struct Component_NavAgent : IComponentData
 {
-    public Entity targetEntity;
     public bool pathCalculated;
     public int currentWaypoint;
-    public float moveSpeed;
     public float nextPathCalculateTime;
 }
 

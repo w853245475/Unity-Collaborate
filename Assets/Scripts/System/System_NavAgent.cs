@@ -1,3 +1,4 @@
+using ROGUE.TD;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
@@ -15,27 +16,33 @@ public partial struct System_NavAgent : ISystem
     [BurstCompile]
     private void OnUpdate(ref SystemState state)
     {
-        foreach (var (navAgent, transform, entity) in SystemAPI.Query<RefRW<Component_NavAgent>, RefRW<LocalTransform>>().WithEntityAccess())
+        var player_entity = SystemAPI.GetSingletonEntity<Tag_PlayerBase>();
+        float3 targetPosition = state.EntityManager.GetComponentData<LocalTransform>(player_entity).Position;
+
+        foreach (var (navAgent, transform, enemy, enemyAttackAspect, entity) in
+            SystemAPI.Query<RefRW<Component_NavAgent>, RefRW<LocalTransform>, RefRW<Component_Enemy>, Aspect_EnemyAttack>().WithEntityAccess())
         {
-            DynamicBuffer<Buffer_Waypoint> wayPointBuffer = state.EntityManager.GetBuffer<Buffer_Waypoint>(entity);
-
-            if (navAgent.ValueRO.nextPathCalculateTime < SystemAPI.Time.ElapsedTime)
+            if (!enemyAttackAspect.IsInAttackRange(targetPosition))
             {
-                navAgent.ValueRW.nextPathCalculateTime += 1;
-                navAgent.ValueRW.pathCalculated = false;
-                CalculatePath(navAgent, transform, wayPointBuffer, ref state);
-            }
-            else
-            {
-                Move(navAgent, transform, wayPointBuffer, ref state);
-            }
+                DynamicBuffer<Buffer_Waypoint> wayPointBuffer = state.EntityManager.GetBuffer<Buffer_Waypoint>(entity);
 
+                if (navAgent.ValueRO.nextPathCalculateTime < SystemAPI.Time.ElapsedTime)
+                {
+                    navAgent.ValueRW.nextPathCalculateTime += 1;
+                    navAgent.ValueRW.pathCalculated = false;
+                    CalculatePath(navAgent, transform, wayPointBuffer, ref state, targetPosition);
+                }
+                else
+                {
+                    Move(navAgent, transform, wayPointBuffer, ref state, enemy);
+                }
+            }
         }    
     }
 
     [BurstCompile]
     private void Move(RefRW<Component_NavAgent> navAgent, RefRW<LocalTransform> transform, DynamicBuffer<Buffer_Waypoint> waypointBuffer,
-    ref SystemState state)
+    ref SystemState state, RefRW<Component_Enemy> enemy)
     {
         if (math.distance(transform.ValueRO.Position, waypointBuffer[navAgent.ValueRO.currentWaypoint].wayPoint) < 0.4f)
         {
@@ -46,29 +53,28 @@ public partial struct System_NavAgent : ISystem
         }
 
         float3 direciton = waypointBuffer[navAgent.ValueRO.currentWaypoint].wayPoint - transform.ValueRO.Position;
-        float angle = math.degrees(math.atan2(direciton.z, direciton.x));
+
+        //float angle = math.degrees(math.atan2(direciton.z, direciton.x));
 
         //transform.ValueRW.Rotation = math.slerp(
         //                transform.ValueRW.Rotation,
         //                quaternion.Euler(new float3(0, angle, 0)),
         //                SystemAPI.Time.DeltaTime);
 
-        transform.ValueRW.Position += math.normalize(direciton) * SystemAPI.Time.DeltaTime * navAgent.ValueRO.moveSpeed;
+        transform.ValueRW.Position += math.normalize(direciton) * SystemAPI.Time.DeltaTime * enemy.ValueRO.speed;
     }
 
     [BurstCompile]
-    private void CalculatePath(RefRW<Component_NavAgent> navAgent, RefRW<LocalTransform> transform, DynamicBuffer<Buffer_Waypoint> wayPointBuffer, ref SystemState state)
+    private void CalculatePath(RefRW<Component_NavAgent> navAgent, RefRW<LocalTransform> transform, 
+        DynamicBuffer<Buffer_Waypoint> wayPointBuffer, ref SystemState state, float3 targetPosition)
     {
         NavMeshQuery query = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.TempJob, 1000);
 
-        var player_entity = SystemAPI.GetSingletonEntity<Tag_PlayerBase>();
-
         float3 fromPosition = transform.ValueRO.Position;
-        float3 toPosition = state.EntityManager.GetComponentData<LocalTransform>(player_entity).Position;
         float3 extends = new float3(1, 1, 1);
 
         NavMeshLocation fromLocation = query.MapLocation(fromPosition, extends, 0);
-        NavMeshLocation toLocation = query.MapLocation(toPosition, extends, 0);
+        NavMeshLocation toLocation = query.MapLocation(targetPosition, extends, 0);
 
         PathQueryStatus status;
         PathQueryStatus returningStatus;
@@ -97,7 +103,7 @@ public partial struct System_NavAgent : ISystem
 
                     returningStatus = PathUtils.FindStraightPath
                         (
-                        query, fromPosition, toPosition, polygonIds, pathSize,
+                        query, fromPosition, targetPosition, polygonIds, pathSize,
                         ref result, ref straightPathFlags, ref vertexSide, ref straightPathCount, maxPathSize
                         );
 
