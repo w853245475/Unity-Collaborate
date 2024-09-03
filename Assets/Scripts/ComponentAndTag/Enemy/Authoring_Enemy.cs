@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
@@ -15,6 +15,12 @@ public class Authoring_Enemy : MonoBehaviour
     public float attackDamage;
 }
 
+public struct Component_EnemyDebuff : IBufferElementData
+{
+    public DebuffType Type;       // Debuff类型（例如 Burn、Slow、Poison 等）
+    public float Duration;        // Debuff的持续时间
+    public float Intensity;       // Debuff的强度（例如易伤效果的比例、减速比例等）
+}
 
 public struct Component_Enemy : IComponentData
 {
@@ -54,5 +60,7 @@ public class EnemyBaker : Baker<Authoring_Enemy>
             attackDamage = authoring.attackDamage,
             attackRange = authoring.attackRange
         });
+        // 添加 Component_EnemyDebuff 缓冲区
+        AddBuffer<Component_EnemyDebuff>(entity);
     }
 }

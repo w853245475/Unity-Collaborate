@@ -1,8 +1,9 @@
 ﻿public enum ElementType
 {
-    Wood,   // 木
-    Fire,   // 火
-    Earth,  // 土
-    Metal,  // 金
-    Water   // 水
+    Normal,  // 普通攻击
+    Fire,    // 火属性
+    Ice,     // 冰属性
+    Poison,  // 毒属性
+    Lightning, // 雷属性
+    LightDark // 光/暗属性
 }
