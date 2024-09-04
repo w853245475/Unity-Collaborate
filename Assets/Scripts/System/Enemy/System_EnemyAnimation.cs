@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ public partial struct System_EnemyAnimation : ISystem
             {
                 Component_VisualReference enemyVisual = entityManager.GetComponentData<Component_VisualReference>(entity);
 
-                enemyVisual.referenceObject.transform.position = transform.Position;
+                enemyVisual.referenceObject.transform.position = new float3(transform.Position.x, transform.Position.y + 0.5f, transform.Position.z);
                 enemyVisual.referenceObject.transform.rotation = transform.Rotation;
 
                 enemyVisual.referenceObject.GetComponent<Animator>().SetBool("IsEnemyWalking", true);

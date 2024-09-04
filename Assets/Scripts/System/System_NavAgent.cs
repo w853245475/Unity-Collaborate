@@ -61,7 +61,7 @@ public partial struct System_NavAgent : ISystem
         //                quaternion.Euler(new float3(0, angle, 0)),
         //                SystemAPI.Time.DeltaTime);
 
-        transform.ValueRW.Position += math.normalize(direciton) * SystemAPI.Time.DeltaTime * enemy.ValueRO.speed;
+        transform.ValueRW.Position += math.normalize(new float3(direciton.x, 0, direciton.z)) * SystemAPI.Time.DeltaTime * enemy.ValueRO.speed;
     }
 
     [BurstCompile]
