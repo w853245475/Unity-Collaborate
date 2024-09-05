@@ -9,14 +9,12 @@ namespace ROGUE.TD
     public class Spawner_Enemy_Authoring : MonoBehaviour
     {
         public GameObject prefab;
-        public GameObject target;
         public float spawnRate;
     }
 
     public struct Component_EnemySpawner : IComponentData
     {
         public Entity prefab;
-        public Entity target;
         public float3 spawnPosition;
         public float nextSpawnTime;
         public float spawnRate;
@@ -31,7 +29,6 @@ namespace ROGUE.TD
             {
                 prefab = GetEntity(authoring.prefab, TransformUsageFlags.Dynamic),
 
-                target = GetEntity(authoring.target, TransformUsageFlags.None),
                 spawnPosition = authoring.transform.position,
                 nextSpawnTime = 3.0f,
                 spawnRate = authoring.spawnRate,

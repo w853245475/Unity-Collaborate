@@ -26,6 +26,13 @@ namespace ROGUE.TD
             set => _enemySpawner.ValueRW.nextSpawnTime = value;
         }
 
+        public float3 GetRandomEnemySpawnPoint()
+        {
+            float3 randomDirection = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100000)).NextFloat3Direction(); // Get a random direction on a sphere
+            float3 randomPosition = randomDirection * 10; // Scale the direction by the distance
+            return randomPosition;
+        }
+
         public float EnemySpawnRate => _enemySpawner.ValueRO.spawnRate;
 
         public float3 spawnPosition => _enemySpawner.ValueRO.spawnPosition;

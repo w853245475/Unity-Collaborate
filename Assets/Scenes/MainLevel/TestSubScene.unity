@@ -140,6 +140,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emeny_Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 4636941617793819001, guid: 6c86c15803b9292478018287cc2cdd99,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7666011611755493462, guid: 6c86c15803b9292478018287cc2cdd99,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -482,7 +487,7 @@ PrefabInstance:
     - target: {fileID: 4729974867446517836, guid: abe2c82459b201f41b6098761488ad29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.17
+      value: -9.02
       objectReference: {fileID: 0}
     - target: {fileID: 4729974867446517836, guid: abe2c82459b201f41b6098761488ad29,
         type: 3}
@@ -492,7 +497,7 @@ PrefabInstance:
     - target: {fileID: 4729974867446517836, guid: abe2c82459b201f41b6098761488ad29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -8.03
       objectReference: {fileID: 0}
     - target: {fileID: 4729974867446517836, guid: abe2c82459b201f41b6098761488ad29,
         type: 3}
