@@ -17,14 +17,12 @@ namespace ROGUE.TD
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            //state.RequireForUpdate<ZombieSpawnTimer>();
         }
 
         [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
         }
-
 
 
         [BurstCompile]
@@ -34,7 +32,7 @@ namespace ROGUE.TD
             var deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSingleton = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
             float3 randomDirection = UnityEngine.Random.onUnitSphere; // Get a random direction on a sphere
-            float3 randomPosition = randomDirection * 10; // Scale the direction by the distance
+            float3 randomPosition = randomDirection * 40; // Scale the direction by the distance
 
             new Job_SpawnEnemy
             {
@@ -44,17 +42,6 @@ namespace ROGUE.TD
             }.Run();
 
         }
-
-        //private void ProcessSpawner(ref SystemState state, RefRW<Component_EnemySpawner> spawner)
-        //{
-        //    if (spawner.ValueRO.nextSpawnTime < SystemAPI.Time.ElapsedTime)
-        //    {
-        //        Entity instantiated = state.EntityManager.Instantiate(spawner.ValueRO.prefab);
-        //        state.EntityManager.SetComponentData(instantiated, LocalTransform.FromPositionRotationScale(spawner.ValueRO.spawnPosition, Quaternion.identity, 5));
-        //        //state.EntityManager.SetComponentData(instantiated, LocalTransform.FromScale(5));
-        //        spawner.ValueRW.nextSpawnTime = (float)SystemAPI.Time.ElapsedTime + spawner.ValueRO.spawnRate;
-        //    }
-        //}
 
         [BurstCompile]
         public partial struct Job_SpawnEnemy : IJobEntity
