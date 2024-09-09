@@ -102,7 +102,7 @@ MonoBehaviour:
   Speed: 3
   DebuffType: 2
   DebuffDuration: 10
-  DebuffIntensity: 0.7
+  DebuffIntensity: 0.15
 --- !u!114 &6764854649613821285
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,13 +17,23 @@ namespace ROGUE.TD
 
         public void PlayerReceiveDamage()
         {
-            foreach (var brainDamageBufferElement in _playerDamageBuffer)
+            foreach (var playerDamageBufferElement in _playerDamageBuffer)
             {
-                _player.ValueRW.health -= brainDamageBufferElement.Value;
+                _player.ValueRW.health -= playerDamageBufferElement.Value;
             }
             _playerDamageBuffer.Clear();
 
+            if (_player.ValueRW.health <= 0)
+            {
+
+            }
+
             //Debug.Log(_player.ValueRW.health);
+        }
+
+        public void DestroyPlayerEntity()
+        {
+
         }
 
     }

@@ -136,13 +136,14 @@ public partial struct System_TowerTargeting : ISystem
         Entity bulletInstance = ecb.Instantiate(bulletData.BulletPrefab);
 
 
-        quaternion rotation = quaternion.LookRotationSafe(tower.TargetDirection, math.up());
-
+            quaternion rotation = quaternion.LookRotationSafe(tower.TargetDirection, math.up());
+            Debug.Log("Bullet instantiated.");
+            Debug.Log(rotation);
             // 设置子弹的组件
             ecb.SetComponent(bulletInstance, new LocalTransform
         {
             Position = spawnPosition,
-            Rotation = rotation,
+            Rotation = new quaternion(0, 0, rotation.value.z, 0),
             Scale = state.EntityManager.GetComponentData<LocalTransform>(bulletData.BulletPrefab).Scale
         });
 

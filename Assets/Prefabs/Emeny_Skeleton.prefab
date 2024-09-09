@@ -52,7 +52,7 @@ MonoBehaviour:
   attackTimer: 20
   attackRange: 0.5
   attackRate: 50
-  attackDamage: 0.1
+  attackDamage: 1
 --- !u!114 &-5160065602734226106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,5 +259,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a68a9b4f4a3d746a06c4ccc38b0024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTrasform: {fileID: 0}
-  moveSpeed: 0.5
