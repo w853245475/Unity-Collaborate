@@ -10,7 +10,9 @@
         "Unity.Burst",
         "Unity.Collections",
         "Unity.Entities.Tests",
-        "Unity.Entities.Editor.Tests"
+        "Unity.Entities.Editor.Tests",
+        "RogueTD.Core",
+        "Unity.Transforms"
     ],
     "includePlatforms": [
         "Editor"
