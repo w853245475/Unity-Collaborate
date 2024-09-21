@@ -75,4 +75,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Tt]estWithTempAssets/*
 /[Aa]ssets/[Ss]ceneDependencyCache/*
 /[Aa]ssets/SceneDependencyCache*
-/[Aa]rtifacts
+/[Aa]rtifacts/
+/[Cc]odeCoverage/
