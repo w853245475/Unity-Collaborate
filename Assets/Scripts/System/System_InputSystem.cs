@@ -8,7 +8,6 @@ using Unity.Mathematics;
 using Unity.Collections;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-[UpdateAfter(typeof(PhysicsSimulationGroup))]
 [BurstCompile]
 public partial struct System_InputSystem : ISystem
 {

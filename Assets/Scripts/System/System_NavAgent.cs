@@ -11,6 +11,7 @@ using UnityEngine.Experimental.AI;
 using UnityEngine.Rendering;
 
 [BurstCompile]
+[UpdateAfter(typeof(System_EnemySpawner))]
 public partial struct System_NavAgent : ISystem
 {
     [BurstCompile]
