@@ -4,15 +4,24 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using ROGUE.TD;
+using Unity.Entities;
 
 [TestFixture]
 public class Test_EnemyAttack : CustomECSTestFixture
 {
 
+    private World m_TestWorld;
+    private EntityManager m_EntityManager;
+    private System_EnemyAttack m_EnemyAttackSystem;
+    private EndSimulationEntityCommandBufferSystem m_EndSimulationECBSystem;
+
     [SetUp]
     public override void Setup()
     {
         base.Setup();
+        m_TestWorld = new World("TestWorld");
+        m_EntityManager = m_TestWorld.EntityManager;
+        m_EndSimulationECBSystem = m_TestWorld.GetExistingSystemManaged<EndSimulationEntityCommandBufferSystem>();
         CreateSystem<System_EnemyAttack>();
     }
 

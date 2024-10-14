@@ -8,7 +8,6 @@ using Unity.Mathematics;
 using Unity.Collections;
 
 
-[CreateAfter(typeof(PhysicsWorldSingleton))]
 [CreateAfter(typeof(BeginSimulationEntityCommandBufferSystem))]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [BurstCompile]
