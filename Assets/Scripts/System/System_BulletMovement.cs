@@ -11,7 +11,7 @@ public partial struct System_BulletMovement : ISystem
         state.RequireForUpdate<Component_Bullet>();
     }
 
-    [BurstCompile]
+    // [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;

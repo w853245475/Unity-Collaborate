@@ -48,8 +48,8 @@ public partial struct System_InputSystem : ISystem
                     //Debug.Log($"Raycast hit at: {hit.Position}");
 
                     // 计算塔应该放置的位置，使用 hit.Position，并适当增加 Y 轴偏移
-                    var towerHeightOffset = 0.5f;  // 根据塔的实际高度进行调整
-                    var towerPosition = hit.Position + new float3(0, towerHeightOffset, 0);
+                    var towerHeightOffset = 1.0f;  // 根据塔的实际高度进行调整
+                    var towerPosition = hit.Position + new float3(0, towerHeightOffset, -0.5f);
                     //Debug.Log($"Calculated tower position: {towerPosition}");
 
                     // 使用 NativeList 来存储检测到的碰撞
@@ -60,7 +60,9 @@ public partial struct System_InputSystem : ISystem
                     {
                         // 如果该位置没有其他塔，则实例化新的塔
                         Entity e = ecbBOS.Instantiate(towers[placementInput.index].Prefab);
-                        ecbBOS.SetComponent(e, LocalTransform.FromPosition(towerPosition));
+                       
+                        var towerScale = new float3(2.0f, 2.0f, 2.0f);
+                        ecbBOS.SetComponent(e, LocalTransform.FromPositionRotationScale(towerPosition, quaternion.identity, 3));
                         //Debug.Log($"Tower successfully placed at: {towerPosition}");
                     }
                     else

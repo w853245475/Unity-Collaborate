@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1225e61faaca84cacc97df49158837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 10
   DebuffType: 0
   DebuffDuration: 10
   DebuffIntensity: 0.15

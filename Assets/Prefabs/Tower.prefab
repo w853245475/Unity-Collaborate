@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3797186868612352959}
@@ -107,9 +107,9 @@ MonoBehaviour:
     y: 0
     z: 0
   m_PrimitiveSize:
-    x: 4.299757
-    y: 4.299757
-    z: 4.299757
+    x: 5.5
+    y: 5.5
+    z: 5.5
   m_PrimitiveOrientation:
     Value:
       x: 0
@@ -117,15 +117,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 4.299757
-    Radius: 2.1498785
+    Height: 5.5
+    Radius: 2.75
     Axis: 2
   m_Cylinder:
-    Height: 4.299757
-    Radius: 2.1498785
+    Height: 5.5
+    Radius: 2.75
     Axis: 2
   m_CylinderSideCount: 20
-  m_SphereRadius: 2.1498785
+  m_SphereRadius: 2.75
   m_MinimumSkinnedVertexWeight: 0.14
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -468,7 +468,7 @@ Transform:
   m_GameObject: {fileID: 1051966307322852706}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

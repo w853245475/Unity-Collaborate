@@ -112,26 +112,31 @@ public partial struct System_TowerTargeting : ISystem
     /// <param name="deltaTime">时间增量</param>
   private void TryShootAtEnemy(ref SystemState state, ref Component_Tower tower, LocalTransform transform, float3 closestEnemyPosition, ref EntityCommandBuffer ecb, Entity towerEntity, float deltaTime)
 {
-    float3 direction = math.normalize(closestEnemyPosition - transform.Position);
 
     tower.TimeSinceLastShot += deltaTime;
 
     if (tower.TimeSinceLastShot >= tower.FireRate)
     {
+        var bulletData = state.EntityManager.GetComponentData<Component_BulletData>(towerEntity);
+
+                float3 spawnPosition = state.EntityManager.GetComponentData<LocalToWorld>(bulletData.SpawnPoint).Position;
+
+        float3 direction = math.normalize(closestEnemyPosition - spawnPosition);
+
+
         tower.TimeSinceLastShot = 0;
         tower.TargetDirection = direction;
 
         //Debug.Log($"Shooting at direction: {direction}");
 
 
-        var bulletData = state.EntityManager.GetComponentData<Component_BulletData>(towerEntity);
+
         // 确保发射点存在
         if (!state.EntityManager.HasComponent<LocalToWorld>(bulletData.SpawnPoint))
         {
             //Debug.LogWarning("Tower does not have a valid SpawnPoint.");
             return;
         }
-        float3 spawnPosition = state.EntityManager.GetComponentData<LocalToWorld>(bulletData.SpawnPoint).Position;
         // 实例化子弹
         Entity bulletInstance = ecb.Instantiate(bulletData.BulletPrefab);
 
@@ -142,6 +147,7 @@ public partial struct System_TowerTargeting : ISystem
             {
                 Position = spawnPosition,
                 Rotation = new quaternion(rotation.value.x, rotation.value.y, rotation.value.z, rotation.value.w),
+                // Rotation = new quaternion(rotation.value.x, rotation.value.y, rotation.value.z, rotation.value.w),
                 Scale = state.EntityManager.GetComponentData<LocalTransform>(bulletData.BulletPrefab).Scale
             }) ;
 
@@ -149,7 +155,7 @@ public partial struct System_TowerTargeting : ISystem
         var bulletComponent = state.EntityManager.GetComponentData<Component_Bullet>(bulletData.BulletPrefab);
         ecb.SetComponent(bulletInstance, new Component_Bullet
         {
-            Direction = tower.TargetDirection,
+            Direction = direction,
             Speed = bulletComponent.Speed,
             DebuffType = bulletComponent.DebuffType,        // 设置 Debuff 类型
             DebuffDuration = bulletComponent.DebuffDuration, // 设置 Debuff 持续时间

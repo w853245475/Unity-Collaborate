@@ -11,7 +11,7 @@ using UnityEngine;
 namespace ROGUE.TD
 {
     [BurstCompile]
-    [UpdateAfter(typeof(System_EnemyMove))]
+    // [UpdateAfter(typeof(System_EnemyMove))]
     public partial struct System_EnemyAttack : ISystem
     {
         [BurstCompile]
@@ -28,7 +28,10 @@ namespace ROGUE.TD
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
-            var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+
+            EndSimulationEntityCommandBufferSystem.Singleton ecbSingleton; 
+
+            SystemAPI.TryGetSingleton(out ecbSingleton);
 
             var player = SystemAPI.GetSingletonEntity<Component_PlayerBase>();
             var playerPos = SystemAPI.GetComponent<LocalTransform>(player).Position;
